@@ -8,9 +8,9 @@ namespace Population0506.Data.Services
     public class DataAccessService
     {
         private readonly SqlConnectionProvider _connectionProvider;
-        public DataAccessService()
+        public DataAccessService(SqlConnectionProvider connectionProvider)
         {
-            _connectionProvider = new SqlConnectionProvider();
+            _connectionProvider = connectionProvider;
         }
 
         public IEnumerable<Region> GetRegions()

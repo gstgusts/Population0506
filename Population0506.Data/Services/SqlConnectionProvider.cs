@@ -23,6 +23,11 @@ namespace Population0506.Data.Services
             //_connectionString = configuration.GetConnectionString("PopulationDbConnectionString");
         }
 
+        public SqlConnectionProvider(string connectionString)
+        {
+            _connectionString = connectionString;
+        }
+
         public SqlConnection GetConnection()
         {
             return new SqlConnection(_connectionString);
