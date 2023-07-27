@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Population0506.Data", "Popu
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Population0506.ConsoleApp", "Population0506.ConsoleApp\Population0506.ConsoleApp.csproj", "{7170464B-B8CF-4AEA-9A1D-4CE422E1E160}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Population0506.WebApi", "Population0506.WebApi\Population0506.WebApi.csproj", "{1D91E030-B6EE-48D0-819C-61E8500056C8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{7170464B-B8CF-4AEA-9A1D-4CE422E1E160}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7170464B-B8CF-4AEA-9A1D-4CE422E1E160}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7170464B-B8CF-4AEA-9A1D-4CE422E1E160}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1D91E030-B6EE-48D0-819C-61E8500056C8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1D91E030-B6EE-48D0-819C-61E8500056C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1D91E030-B6EE-48D0-819C-61E8500056C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1D91E030-B6EE-48D0-819C-61E8500056C8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
