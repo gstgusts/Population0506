@@ -40,43 +40,79 @@ namespace Population0506.Data.Services
             return ExecuteSql("select * from Region where Name like @name", parameters);
         }
 
+        public int SaveCity(City city)
+        {
+            using (var connection = _connectionProvider.GetConnection())
+            {
+                try
+                {
+                    connection.Open();
+                    var cmd = new SqlCommand("spAddCity", connection);
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    cmd.Parameters.AddWithValue("@name", city.Name);
+                    cmd.Parameters.AddWithValue("@region_id", city.Region.Id);
+
+                    var outputParameter = new SqlParameter("@new_id", SqlDbType.Int);
+                    outputParameter.Direction = ParameterDirection.Output;
+
+                    cmd.Parameters.Add(outputParameter);
+
+                    cmd.ExecuteNonQuery();
+
+                    var newId = Convert.ToInt32(cmd.Parameters["@new_id"].Value);
+
+                    connection.Close();
+
+                    return newId;
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+
+                
+            }
+         }
+
         private IEnumerable<Region> ExecuteSql(string sql, Dictionary<string, object>? parameters = null)
         {
-            var connection = _connectionProvider.GetConnection();
-
-            SqlCommand cmd = connection.CreateCommand();
-
-            cmd.CommandText = sql;
-            cmd.CommandType = CommandType.Text;
-
-            if (parameters != null && parameters.Any())
+            using(var connection = _connectionProvider.GetConnection())
             {
-                foreach (var parameter in parameters)
+                var cmd = connection.CreateCommand();
+
+                cmd.CommandText = sql;
+                cmd.CommandType = CommandType.Text;
+
+                if (parameters != null && parameters.Any())
                 {
-                    cmd.Parameters.AddWithValue(parameter.Key, parameter.Value);
-                }
-            }
-
-            try
-            {
-                connection.Open();
-
-                var reader = cmd.ExecuteReader();
-
-                var items = new List<Region>();
-
-                while (reader.Read())
-                {
-                    items.Add(new Region(reader.GetInt32("Id"), reader.GetString("Name")));
+                    foreach (var parameter in parameters)
+                    {
+                        cmd.Parameters.AddWithValue(parameter.Key, parameter.Value);
+                    }
                 }
 
-                connection.Close();
+                try
+                {
+                    connection.Open();
 
-                return items;
-            }
-            catch (Exception ex)
-            {
-                throw;
+                    var reader = cmd.ExecuteReader();
+
+                    var items = new List<Region>();
+
+                    while (reader.Read())
+                    {
+                        items.Add(new Region(reader.GetInt32("Id"), reader.GetString("Name")));
+                    }
+
+                    connection.Close();
+
+                    return items;
+                }
+                catch (Exception ex)
+                {
+                    throw;
+                }
             }
         }
     }
