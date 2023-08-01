@@ -27,8 +27,6 @@ namespace Population0506.ConsoleApp
             dataWriter.Write<CityData, City>(cities);
 
             dataWriter.Write<RegionData, Region>(regions);
-
-            //dataWriter.Write(cities);
         }
     }
 }

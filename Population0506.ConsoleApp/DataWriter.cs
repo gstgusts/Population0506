@@ -33,15 +33,12 @@ namespace Population0506.ConsoleApp
         }
 
         public void Write<T, K>(IEnumerable<T> items) where T : IMapable<K>
+                                                      where K : IAddableEntity
         {
             foreach (var c in items)
             {
                 var entityToSave = c.Map();
-
-                Console.WriteLine(entityToSave);
-
-                //var result = _dataAccessService.SaveCity(city);
-                //Console.WriteLine(result);
+                _dataAccessService.Add<K>(entityToSave);
             }
         }
     }

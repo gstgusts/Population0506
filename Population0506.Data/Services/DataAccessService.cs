@@ -70,10 +70,40 @@ namespace Population0506.Data.Services
                 {
                     throw;
                 }
-
-                
             }
          }
+
+        public int Add<T>(T entity) where T : IAddableEntity
+        {
+            using (var connection = _connectionProvider.GetConnection())
+            {
+                try
+                {
+                    connection.Open();
+                    var cmd = new SqlCommand(entity.StoredProcedureName, connection);
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    entity.AddParameters(cmd.Parameters);
+
+                    var outputParameter = new SqlParameter("@new_id", SqlDbType.Int);
+                    outputParameter.Direction = ParameterDirection.Output;
+
+                    cmd.Parameters.Add(outputParameter);
+
+                    cmd.ExecuteNonQuery();
+
+                    var newId = Convert.ToInt32(cmd.Parameters["@new_id"].Value);
+
+                    connection.Close();
+
+                    return newId;
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+            }
+        }
 
         private IEnumerable<Region> ExecuteSql(string sql, Dictionary<string, object>? parameters = null)
         {
