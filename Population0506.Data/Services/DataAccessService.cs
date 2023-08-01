@@ -13,6 +13,11 @@ namespace Population0506.Data.Services
             _connectionProvider = connectionProvider;
         }
 
+        public IEnumerable<T> GetItems<T>(string query) where T : IReadable<T> {
+            return null;
+            // return ExecuteSql<T>(query);
+        }
+
         public IEnumerable<Region> GetRegions()
         {
             return ExecuteSql("select * from Region");
@@ -133,6 +138,47 @@ namespace Population0506.Data.Services
                     while (reader.Read())
                     {
                         items.Add(new Region(reader.GetInt32("Id"), reader.GetString("Name")));
+                    }
+
+                    connection.Close();
+
+                    return items;
+                }
+                catch (Exception ex)
+                {
+                    throw;
+                }
+            }
+        }
+
+        private IEnumerable<T> ExecuteSql<T>(string sql, Dictionary<string, object>? parameters = null) where T : IReadable<T>, new()
+        {
+            using (var connection = _connectionProvider.GetConnection())
+            {
+                var cmd = connection.CreateCommand();
+
+                cmd.CommandText = sql;
+                cmd.CommandType = CommandType.Text;
+
+                if (parameters != null && parameters.Any())
+                {
+                    foreach (var parameter in parameters)
+                    {
+                        cmd.Parameters.AddWithValue(parameter.Key, parameter.Value);
+                    }
+                }
+
+                try
+                {
+                    connection.Open();
+
+                    var reader = cmd.ExecuteReader();
+
+                    var items = new List<T>();
+
+                    while (reader.Read())
+                    {
+                        //items.Add(new T(reader));
                     }
 
                     connection.Close();
