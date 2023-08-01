@@ -10,6 +10,8 @@ namespace Population0506.Data.Models
 {
     public class CarsPersOwner : IReadable<CarsPersOwner>
     {
+        public CarsPersOwner() { }
+
         public string? Name { get; set; }
         public string? Surname { get; set; }
 

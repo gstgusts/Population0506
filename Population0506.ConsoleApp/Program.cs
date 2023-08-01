@@ -15,18 +15,25 @@ namespace Population0506.ConsoleApp
 
             IConfiguration configuration = builder.Build();
 
-            var sqlConnectionProvider = new SqlConnectionProvider(configuration.GetConnectionString("PopulationDbConnectionString"));
+            var sqlConnectionProvider = new SqlConnectionProvider(configuration.GetConnectionString("CarDbConnectionString"));
             var dataAccessService = new DataAccessService(sqlConnectionProvider);
 
-            var cities = DataReader.Load<CityData>(@"Data/data.csv");
+            //var cities = DataReader.Load<CityData>(@"Data/data.csv");
 
-            var regions = DataReader.Load<RegionData>(@"Data/region_data.csv");
+            //var regions = DataReader.Load<RegionData>(@"Data/region_data.csv");
 
-            var dataWriter = new DataWriter(dataAccessService);
+            //var dataWriter = new DataWriter(dataAccessService);
 
-            dataWriter.Write<CityData, City>(cities);
+            //dataWriter.Write<CityData, City>(cities);
 
-            dataWriter.Write<RegionData, Region>(regions);
+            //dataWriter.Write<RegionData, Region>(regions);
+
+            var result = dataAccessService.GetItems<CarsPersOwner>("select * from dbo.vCarsPerOwner");
+
+            foreach (var item in result)
+            {
+                Console.WriteLine($"{item.Name}-{item.Surname}-{item.NumberOfCars}");
+            }
         }
     }
 }

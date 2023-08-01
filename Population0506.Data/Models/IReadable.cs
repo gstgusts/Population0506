@@ -9,6 +9,6 @@ namespace Population0506.Data.Models
 {
     public interface IReadable<T>
     {
-        abstract T Create(SqlDataReader reader);
+        T Create(SqlDataReader reader);
     }
 }

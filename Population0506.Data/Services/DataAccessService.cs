@@ -13,9 +13,8 @@ namespace Population0506.Data.Services
             _connectionProvider = connectionProvider;
         }
 
-        public IEnumerable<T> GetItems<T>(string query) where T : IReadable<T> {
-            return null;
-            // return ExecuteSql<T>(query);
+        public IEnumerable<T> GetItems<T>(string query, Dictionary<string, object>? parameters = null) where T : IReadable<T>, new() {
+            return ExecuteSql<T>(query, parameters);
         }
 
         public IEnumerable<Region> GetRegions()
@@ -178,7 +177,7 @@ namespace Population0506.Data.Services
 
                     while (reader.Read())
                     {
-                        //items.Add(new T(reader));
+                        items.Add(new T().Create(reader));
                     }
 
                     connection.Close();
