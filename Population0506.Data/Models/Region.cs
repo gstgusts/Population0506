@@ -2,6 +2,11 @@
 {
     public class Region
     {
+
+        public Region(string name) { 
+            Name = name;
+        }
+
         public Region(int id, string name)
         {
             Id = id;

@@ -9,13 +9,24 @@ using System.Threading.Tasks;
 
 namespace Population0506.ConsoleApp
 {
-    public class DataReader
+    public static class DataReader
     {
         public static IEnumerable<CityData> Load() {
             using (var reader = new StreamReader(@"Data/data.csv"))
             using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
             {
                 var records = csv.GetRecords<CityData>();
+
+                return records.ToArray();
+            }
+        }
+
+        public static IEnumerable<T> Load<T>(string path)
+        {
+            using (var reader = new StreamReader(path))
+            using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
+            {
+                var records = csv.GetRecords<T>();
 
                 return records.ToArray();
             }

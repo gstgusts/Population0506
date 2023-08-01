@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Configuration;
+using Population0506.ConsoleApp.Data;
 using Population0506.Data.Models;
 using Population0506.Data.Services;
 
@@ -17,38 +18,17 @@ namespace Population0506.ConsoleApp
             var sqlConnectionProvider = new SqlConnectionProvider(configuration.GetConnectionString("PopulationDbConnectionString"));
             var dataAccessService = new DataAccessService(sqlConnectionProvider);
 
-            //var regions = dataAccessService.GetRegions();
+            var cities = DataReader.Load<CityData>(@"Data/data.csv");
 
-            //foreach (var region in regions) { 
-            //    Console.WriteLine(region.Name);
-            //}
+            var regions = DataReader.Load<RegionData>(@"Data/region_data.csv");
 
-            //var region = dataAccessService.GetRegionById(1);
+            var dataWriter = new DataWriter(dataAccessService);
 
-            //var city = new City
-            //{
-            //    Name = "Riga",
-            //    Region = region
-            //};
+            dataWriter.Write<CityData, City>(cities);
 
-            //var result = dataAccessService.SaveCity(city);
+            dataWriter.Write<RegionData, Region>(regions);
 
-            //Console.WriteLine(result);
-
-
-            var cities = DataReader.Load();
-
-            foreach (var c in cities)
-            {
-                var city = new City
-                {
-                    Name = c.Name,
-                    Region = new Region(c.RegionId, "")
-                };
-
-                var result= dataAccessService.SaveCity(city);
-                Console.WriteLine(result);
-            }
+            //dataWriter.Write(cities);
         }
     }
 }

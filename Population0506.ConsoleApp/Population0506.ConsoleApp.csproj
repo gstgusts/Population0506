@@ -22,6 +22,9 @@
     <None Update="appSettings.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="Data\region_data.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Data\data.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
